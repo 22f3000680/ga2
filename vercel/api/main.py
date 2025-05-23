@@ -1,0 +1,129 @@
+from fastapi import FastAP ,  Query
+from fastapi.middleware.cors import CORSMiddleware
+import json
+from typing import List
+
+app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware, 
+    allow_origins=["*"] ,   # Allows all origins
+    allow_credentials=True , 
+    allow_methods=["GET"] , 
+    allow_headers=["*"], 
+)
+
+names_dict = {{"name":"K" , "marks":62} 
+, {"name":"RWpDU" , "marks":48} 
+, {"name":"LfNAsRVT" , "marks":28} 
+, {"name":"29YP8QB" , "marks":17} 
+, {"name":"LnMJOqJsl" , "marks":68} 
+, {"name":"1" , "marks":65} 
+, {"name":"u" , "marks":38} 
+, {"name":"VB" , "marks":81} 
+, {"name":"3L" , "marks":4} 
+, {"name":"O" , "marks":66} 
+, {"name":"nLB404k" , "marks":16} 
+, {"name":"bgv" , "marks":40} 
+, {"name":"NePlzl2" , "marks":18} 
+, {"name":"Gtc15uVId7" , "marks":47} 
+, {"name":"Y4aG" , "marks":28} 
+, {"name":"43xWKghRl" , "marks":37} 
+, {"name":"HHFFDspE" , "marks":21} 
+, {"name":"G" , "marks":65} 
+, {"name":"x" , "marks":18} 
+, {"name":"uGGgSe" , "marks":5} 
+, {"name":"vaCmOJ7" , "marks":57} 
+, {"name":"MRY5" , "marks":57} 
+, {"name":"DZvuiASK" , "marks":94} 
+, {"name":"t" , "marks":75} 
+, {"name":"B" , "marks":68} 
+, {"name":"Boec4crP" , "marks":36} 
+, {"name":"p2j" , "marks":68} 
+, {"name":"nT48IYW" , "marks":41} 
+, {"name":"a" , "marks":83} 
+, {"name":"Ydqv" , "marks":92} 
+, {"name":"nyOlCY2Q" , "marks":19} 
+, {"name":"A8" , "marks":89} 
+, {"name":"HayQ" , "marks":48} 
+, {"name":"ZEZijE7" , "marks":13} 
+, {"name":"X3g8VLbOp" , "marks":18} 
+, {"name":"z0" , "marks":99} 
+, {"name":"tt" , "marks":89} 
+, {"name":"HNdkyzbH" , "marks":99} 
+, {"name":"Esfppzs" , "marks":80} 
+, {"name":"WES" , "marks":2} 
+, {"name":"FLKIDb5ftk" , "marks":19} 
+, {"name":"bGk" , "marks":8} 
+, {"name":"8LD9d" , "marks":31} 
+, {"name":"aHI" , "marks":90} 
+, {"name":"F1f" , "marks":47} 
+, {"name":"Ax" , "marks":49} 
+, {"name":"Ity30en" , "marks":80} 
+, {"name":"mr" , "marks":66} 
+, {"name":"k6ATGDiFCN" , "marks":52} 
+, {"name":"Bl2WI5PR" , "marks":70} 
+, {"name":"aIPSFH" , "marks":44} 
+, {"name":"wiDm" , "marks":96} 
+, {"name":"Syx0nCAg" , "marks":41} 
+, {"name":"QB" , "marks":26} 
+, {"name":"iQ" , "marks":32} 
+, {"name":"A" , "marks":38} 
+, {"name":"fv7yqPfZDd" , "marks":65} 
+, {"name":"jQeAP" , "marks":63} 
+, {"name":"mDe" , "marks":23} 
+, {"name":"WlhPX" , "marks":75} 
+, {"name":"4tMjA" , "marks":76} 
+, {"name":"NxYtFP" , "marks":26} 
+, {"name":"H" , "marks":96} 
+, {"name":"yRRzgVX1" , "marks":15} 
+, {"name":"gsY6BdFTYf" , "marks":87} 
+, {"name":"tJC8a" , "marks":4} 
+, {"name":"lYU" , "marks":76} 
+, {"name":"NnW26Lr" , "marks":71} 
+, {"name":"0" , "marks":19} 
+, {"name":"lDGM" , "marks":96} 
+, {"name":"lzsnho" , "marks":2} 
+, {"name":"q2OJ" , "marks":52} 
+, {"name":"jY2tpIWKeA" , "marks":39} 
+, {"name":"r0MhiiH" , "marks":5} 
+, {"name":"P5u3YtKmJ" , "marks":93} 
+, {"name":"JYV" , "marks":86} 
+, {"name":"2" , "marks":54} 
+, {"name":"99Jebjz" , "marks":9} 
+, {"name":"tQ" , "marks":90} 
+, {"name":"zqSzi" , "marks":58} 
+, {"name":"h" , "marks":65} 
+, {"name":"DUHD1" , "marks":46} 
+, {"name":"yjoll1" , "marks":37} 
+, {"name":"tNpwj" , "marks":85} 
+, {"name":"HqZg2" , "marks":90} 
+, {"name":"ZcnF1gX439" , "marks":54} 
+, {"name":"9n" , "marks":90} 
+, {"name":"yKN6a" , "marks":85} 
+, {"name":"3" , "marks":11} 
+, {"name":"ME5leX0X2b" , "marks":3} 
+, {"name":"a2bVIgiB" , "marks":53} 
+, {"name":"XTuzJNhm" , "marks":47} 
+, {"name":"M" , "marks":19} 
+, {"name":"ILTsHIHig" , "marks":69} 
+, {"name":"Z8e8" , "marks":12} 
+, {"name":"MpB" , "marks":44} 
+, {"name":"y" , "marks":2} 
+, {"name":"vFI" , "marks":60} 
+, {"name":"QrGttudY" , "marks":92} 
+, {"name":"Zlq8vI" , "marks":40}}
+
+
+
+
+@app.get("/api")
+async def get_marks(name: List[str] = Query(None)):
+    if not name:
+        return {"error": "No names provided"}
+
+
+    # Get marks for each provided name
+    marks = [names_dict.get( n,  0) for n in name]
+    return {"marks": marks}
